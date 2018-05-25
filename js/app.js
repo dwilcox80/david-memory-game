@@ -5,6 +5,15 @@
  *   - add each card's HTML to the page
  */
 
+ let card = document.querySelectorAll('.card');
+
+ card.forEach(function(li) {
+	 li.addEventListener('click', function () {
+		 this.classList.toggle('open');
+		 this.classList.toggle('show');
+	 });
+ });
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
