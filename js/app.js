@@ -51,14 +51,20 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-let cardEvent = document.querySelectorAll('.card');
 
-cardEvent.forEach(function (li) {
-	li.addEventListener('click', function () {
-		this.classList.toggle('open');
-		this.classList.toggle('show');
-	});
-});
+ //add event listeners to cards
+let cardEvent = document.querySelectorAll('.card');
+let cardEvents = [...cardEvent];
+
+for (let i = 0; i < cardEvents.length; i++) {
+	x = cardEvent[i];
+	x.addEventListener('click',showCard);
+	x.addEventListener('click',pushCardHold);
+}
+
+//create array to hold cards for comparison
+let tempCardHold = [];
+
 //set up variables for the game "statistics"
 let moves = document.querySelector('.moves');
 let stars = document.querySelector('.stars');
