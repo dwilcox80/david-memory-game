@@ -4,7 +4,6 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
 const cardIconClasses = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt',
 							'fa fa-cube', 'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf','fa fa-cube',
 							'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf', 'fa fa-diamond',
@@ -42,9 +41,6 @@ function shuffle(array) {
     return array;
 }
 
-// shuffle(cards);
-
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -55,3 +51,14 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+let cardEvent = document.querySelectorAll('.card');
+
+cardEvent.forEach(function (li) {
+	li.addEventListener('click', function () {
+		this.classList.toggle('open');
+		this.classList.toggle('show');
+	});
+});
+//set up variables for the game "statistics"
+let moves = document.querySelector('.moves');
+let stars = document.querySelector('.stars');
