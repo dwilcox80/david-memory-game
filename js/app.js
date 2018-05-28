@@ -57,13 +57,24 @@ let cardEvent = document.querySelectorAll('.card');
 let cardEvents = [...cardEvent];
 
 for (let i = 0; i < cardEvents.length; i++) {
-	x = cardEvent[i];
+	let x = cardEvent[i];
 	x.addEventListener('click',showCard);
 	x.addEventListener('click',pushCardHold);
 }
 
+//function to display cards when clicked
+function showCard() {
+	this.classList.toggle('open');
+	this.classList.toggle('show');
+}
+
 //create array to hold cards for comparison
 let tempCardHold = [];
+
+//function to push cards into comparison array
+function pushCardHold() {
+	tempCardHold.push(this);
+}
 
 //set up variables for the game "statistics"
 let moves = document.querySelector('.moves');
