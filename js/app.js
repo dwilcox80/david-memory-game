@@ -5,14 +5,27 @@
  *   - add each card's HTML to the page
  */
 
- let card = document.querySelectorAll('.card');
+const cardIconClasses = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt',
+							'fa fa-cube', 'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf','fa fa-cube',
+							'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf', 'fa fa-diamond',
+							'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt'];
 
- card.forEach(function(li) {
-	 li.addEventListener('click', function () {
-		 this.classList.toggle('open');
-		 this.classList.toggle('show');
-	 });
- });
+const card = document.querySelectorAll('i');
+const cards = [...card];
+
+function removeCardClasses() {
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].setAttribute('class','');
+	}
+}
+
+function addCardClasses() {
+	for (let i = 0; i < cards.length; i++) {
+		cardIconClasses.forEach(function() {
+			cards[i].setAttribute('class', cardIconClasses[i]);
+		});
+	}
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -28,6 +41,8 @@ function shuffle(array) {
 
     return array;
 }
+
+// shuffle(cards);
 
 
 /*
