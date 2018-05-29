@@ -4,20 +4,25 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+ //array to hold <i> element classes for shuffling
 const cardIconClasses = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt',
 							'fa fa-cube', 'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf','fa fa-cube',
 							'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf', 'fa fa-diamond',
 							'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt'];
 
+//selecting <i> elements and store them in array
 const card = document.querySelectorAll('i');
 const cards = [...card];
 
+//for every element in card array, remove classes
 function removeCardClasses() {
 	for (let i = 0; i < cards.length; i++) {
 		cards[i].setAttribute('class','');
 	}
 }
 
+//for every element in card array, add class from cardIconClasses array
 function addCardClasses() {
 	for (let i = 0; i < cards.length; i++) {
 		cardIconClasses.forEach(function() {
@@ -29,7 +34,6 @@ function addCardClasses() {
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -37,7 +41,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -74,6 +77,38 @@ let tempCardHold = [];
 //function to push cards into comparison array
 function pushCardHold() {
 	tempCardHold.push(this);
+	if (tempCardHold.length === 2) {
+		let x = tempCardHold[0].innerHTML;
+		let y = tempCardHold[1].innerHTML;
+		if (x === y) {
+			cardMatch();
+		}
+			else {
+				noCardMatch();
+			}
+	}
+}
+
+//function defining actions for matching cards
+function cardMatch () {
+	tempCardHold[0].classList.toggle('match');
+	tempCardHold[1].classList.toggle('match');
+	tempCardHold = [];
+}
+
+//function defining actions for non-matching cards
+function noCardMatch () {
+	for (let i = 0; i < tempCardHold.length; i++) {
+	tempCardHold[i].classList.toggle('no-match');
+	}
+	for (let i = 0; i < tempCardHold.length; i++) {
+	// tempCardHold[1].classList.toggle('no-match');
+	tempCardHold[i].classList.remove('show', 'open', 'no-match');
+	// tempCardHold[0].classList.remove('open');
+	// tempCardHold[1].classList.remove('show');
+	// tempCardHold[1].classList.remove('open');
+	}
+	tempCardHold = [];
 }
 
 //set up variables for the game "statistics"
