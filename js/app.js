@@ -6,14 +6,19 @@
  */
 
  //array to hold <i> element classes for shuffling
-const cardIconClasses = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt',
-							'fa fa-cube', 'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf','fa fa-cube',
-							'fa fa-bicycle', 'fa fa-bomb','fa fa-leaf', 'fa fa-diamond',
-							'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt'];
+const cardIconClasses = ['fa fa-diamond', 'fa fa-diamond',
+							'fa fa-anchor',  'fa fa-anchor',
+							'fa fa-bolt', 'fa fa-bolt',
+							'fa fa-cube', 'fa fa-cube',
+							'fa fa-bomb','fa fa-bomb',
+							'fa fa-bicycle', 'fa fa-bicycle',
+							'fa fa-leaf', 'fa fa-leaf',
+							'fa fa-paper-plane-o', 'fa fa-paper-plane-o'
+							];
 
 //selecting <i> elements and store them in array
 const card = document.querySelectorAll('i');
-const cards = [...card];
+const cardz = [...card];
 
 //for every element in card array, remove classes
 function removeCardClasses() {
@@ -55,16 +60,14 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- //add event listeners to cards
-let cardEvent = document.querySelectorAll('.card');
-let cardEvents = [...cardEvent];
+ //grab all li elements with class of 'card'
+let cards = document.querySelectorAll('.card');
 
-for (let i = 0; i < cardEvents.length; i++) {
-	let x = cardEvent[i];
-	x.addEventListener('click',showCard);
-	x.addEventListener('click',pushCardHold);
-}
-
+cards.forEach(function(card) {
+	card.addEventListener('click', function (event) {
+		console.log(event);
+	})
+})
 //function to display cards when clicked
 function showCard() {
 	this.classList.toggle('open');
