@@ -1,44 +1,31 @@
 /*
+* Create a list that holds all of your cards
+*/
+let cardIconClasses = ['fa-diamond','fa-diamond',
+						'fa-bolt', 'fa-bolt',
+						'fa-cube', 'fa-cube',
+						'fa-bomb','fa-bomb',
+						'fa-bicycle','fa-bicycle',
+						'fa-leaf','fa-leaf',
+						'fa-paper-plane-o','fa-paper-plane-o',
+						'fa-anchor','fa-anchor'
+						];
+
+function createCard(card) {
+	return `<li class="card" data-card=${card}><i class="fa ${card}"></i></li>`;
+}
+
+/*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
 
- //array to hold <i> element classes for shuffling
-const cardIconClasses = ['fa fa-diamond', 'fa fa-diamond',
-							'fa fa-anchor',  'fa fa-anchor',
-							'fa fa-bolt', 'fa fa-bolt',
-							'fa fa-cube', 'fa fa-cube',
-							'fa fa-bomb','fa fa-bomb',
-							'fa fa-bicycle', 'fa fa-bicycle',
-							'fa fa-leaf', 'fa fa-leaf',
-							'fa fa-paper-plane-o', 'fa fa-paper-plane-o'
-							];
-
-//selecting <i> elements and store them in array
-const card = document.querySelectorAll('i');
-const cardz = [...card];
-
-//for every element in card array, remove classes
-function removeCardClasses() {
-	for (let i = 0; i < cards.length; i++) {
-		cards[i].setAttribute('class','');
-	}
-}
-
-//for every element in card array, add class from cardIconClasses array
-function addCardClasses() {
-	for (let i = 0; i < cards.length; i++) {
-		cardIconClasses.forEach(function() {
-			cards[i].setAttribute('class', cardIconClasses[i]);
-		});
-	}
-}
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
+
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -46,6 +33,7 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
+
     return array;
 }
 
@@ -60,59 +48,83 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- //grab all li elements with class of 'card'
+//dynamically generate game board with randomized cards
+function startGame() {
+	//grab deck and map cardIconClasses
+	let deck = document.querySelector('.deck');
+	let cardHTML = shuffle(cardIconClasses).map(function(card) {
+		return createCard(card);
+	});
+	//join mapped cardHTML to the game board
+	deck.innerHTML = cardHTML.join('');
+}
+
+startGame();
+
+//function to temporarily disable card 'click' event
+function disable(){
+    Array.prototype.filter.call(cards, function(card){
+        card.classList.add('disabled');
+    });
+}
+
+//function to re-enable card 'click' event
+function enable(){
+    Array.prototype.filter.call(cards, function(card){
+        card.classList.remove('disabled');
+    });
+}
+
+//grab all <li> elements with class of '.card'
 let cards = document.querySelectorAll('.card');
 
-cards.forEach(function(card) {
-	card.addEventListener('click', function (event) {
-		console.log(event);
-	})
-})
-//function to display cards when clicked
-function showCard() {
-	this.classList.toggle('open');
-	this.classList.toggle('show');
-}
-
 //create array to hold cards for comparison
-let tempCardHold = [];
+let tempOpenCard = [];
 
-//function to push cards into comparison array
-function pushCardHold() {
-	tempCardHold.push(this);
-	if (tempCardHold.length === 2) {
-		let x = tempCardHold[0].innerHTML;
-		let y = tempCardHold[1].innerHTML;
-		if (x === y) {
-			cardMatch();
+//create array for cards that are matched
+let matchedCards = [];
+
+//loop through nodeList and add event listener
+cards.forEach(function(card) {
+	card.addEventListener('click', function(evt){
+		//show some cards and add them to the tempOpenCard array for comparison
+		if (!card.classList.contains('show', 'open') && !card.classList.contains('match')) {
+			tempOpenCard.push(card);
+			card.classList.add('show','open');
 		}
-			else {
-				noCardMatch();
+		//when tempOpenCard array reaches two cards, compare cards
+		if (tempOpenCard.length === 2) {
+			disable();
+			//if cards do not match
+			if (tempOpenCard[0].dataset.card !== tempOpenCard[1].dataset.card) {
+				setTimeout(function() {
+					tempOpenCard.forEach(function(card) {
+						card.classList.add('no-match');
+					});
+				}, 500);
+				setTimeout(function() {
+					tempOpenCard.forEach(function(card){
+						card.classList.remove('show','open');
+						card.classList.remove('no-match');
+					});
+					enable();
+					tempOpenCard = [];
+				}, 1200);
 			}
-	}
-}
+				else {
+					tempOpenCard.forEach(function(card) {
+						card.classList.add('match');
+						card.classList.remove('show', 'open');
+						matchedCards.push(card);
+					});
+					enable();
+					tempOpenCard = [];
+				}
+		}
+	});
+});
 
-//function defining actions for matching cards
-function cardMatch () {
-	tempCardHold[0].classList.toggle('match');
-	tempCardHold[1].classList.toggle('match');
-	tempCardHold = [];
-}
 
-//function defining actions for non-matching cards
-function noCardMatch () {
-	for (let i = 0; i < tempCardHold.length; i++) {
-	tempCardHold[i].classList.toggle('no-match');
-	}
-	for (let i = 0; i < tempCardHold.length; i++) {
-	// tempCardHold[1].classList.toggle('no-match');
-	tempCardHold[i].classList.remove('show', 'open', 'no-match');
-	// tempCardHold[0].classList.remove('open');
-	// tempCardHold[1].classList.remove('show');
-	// tempCardHold[1].classList.remove('open');
-	}
-	tempCardHold = [];
-}
 
 //set up variables for the game "statistics"
 let moves = document.querySelector('.moves');
