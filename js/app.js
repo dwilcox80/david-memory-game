@@ -48,6 +48,15 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+ //grab the moves counter
+ let moves = document.querySelector('.moves');
+ let counter = 0;
+
+ function moveCounter() {
+	counter ++;
+	moves.innerHTML = counter;
+ }
+
 //dynamically generate game board with randomized cards
 function startGame() {
 	//grab deck and map cardIconClasses
@@ -57,6 +66,7 @@ function startGame() {
 	});
 	//join mapped cardHTML to the game board
 	deck.innerHTML = cardHTML.join('');
+	moves.innerHTML = 0;
 }
 
 startGame();
@@ -110,22 +120,31 @@ cards.forEach(function(card) {
 					enable();
 					tempOpenCard = [];
 				}, 1200);
+				moveCounter();
 			}
 				else {
 					tempOpenCard.forEach(function(card) {
-						card.classList.add('match');
+						card.classList.add('match', 'pulse');
 						card.classList.remove('show', 'open');
 						matchedCards.push(card);
 					});
 					enable();
+					moveCounter();
 					tempOpenCard = [];
 				}
 		}
 	});
 });
 
+//winning the game!
+if (matchedCards.length === 16) {
+	//stop timer
+	//grab move count
+	//grab stars
+	//display modal
+	if (playAgain) {
+		startGame();
+	}
+}
 
-
-//set up variables for the game "statistics"
-let moves = document.querySelector('.moves');
 let stars = document.querySelector('.stars');
