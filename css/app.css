@@ -19,7 +19,7 @@ body {
 body {
 	background: #ffffff url('../img/geometry2.png');
 	/* Background pattern from Subtle Patterns */
-	font-family: 'Coda', cursive;
+	font-family: 'Righteous', open-sans;
 }
 
 .heading-title {
@@ -35,9 +35,9 @@ body {
 }
 
 h1 {
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
-	font-size: 35px;
+	font-size: 45px;
+	margin: 0;
 }
 
 
@@ -144,15 +144,21 @@ h1 {
     80% { transform: scale(1.075); }
     100% { transform: scale(1); }
 }
+
 /*
  * Styles for the Score Panel
  */
 
 .score-panel {
-	display: flex;
 	width: 50%;
-	margin-bottom: 10px;
 	font-size: 20px;
+}
+
+.game-stats {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
 }
 
 .score-panel .stars {
@@ -160,6 +166,7 @@ h1 {
 	padding: 0;
 	display: inline-block;
 	margin: 0 5px 0 0;
+	color: #ecec40;
 }
 
 .score-panel .stars li {
@@ -167,17 +174,24 @@ h1 {
 	display: inline-block;
 }
 
-.score-panel .star-container ,
-.score-panel .move-container,
-.score-panel .time-container {
+.score-panel .stat-container  {
 	display: flex;
-	width: 25%;
+	width: 33.3333334%;
 	justify-content: center;
 }
 
- .score-panel .restart {
+ .button  {
 	display: flex;
-	width: 25%;
+	width: 50%;
 	justify-content: center;
+}
+
+.button button {
+	background-color: #02ccba;
+	width: 40%;
 	cursor: pointer;
+	border-radius: 5px;
+	padding: 10px;
+	font-size: 15px;
+	font-family: 'Righteous';
 }

@@ -6,7 +6,7 @@
 		<title>Matching Game</title>
 		<meta name="description" content="">
 		<link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-		<link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+		<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 		<link rel="stylesheet" href="css/app.css">
 	</head>
 	<body>
@@ -17,21 +17,28 @@
 				</div>
 			</header>
 			<section class="score-panel">
-				<div class="star-container">
-					<ul class="stars">
-						<li><i class="fa fa-star"></i></li>
-						<li><i class="fa fa-star"></i></li>
-						<li><i class="fa fa-star"></i></li>
-					</ul>
+				<div class="game-stats">
+					<div class="stat-container">
+						<ul class="stars">
+							<li><i class="fa fa-star"></i></li>
+							<li><i class="fa fa-star"></i></li>
+							<li><i class="fa fa-star"></i></li>
+						</ul>
+					</div>
+					<div class="stat-container">
+						<span class="moves">0&nbsp;</span>Moves
+					</div>
+					<div class="stat-container">
+						<span class="timer"></span>
+					</div>
 				</div>
-				<div class="move-container">
-					<span class="moves">0&nbsp;</span>Moves
-				</div>
-				<div class="time-container">
-					<span class="timer"></span>
-				</div>
-				<div class="restart">
-					<i class="fa fa-repeat"></i>
+				<div class="game-stats">
+					<div id="begin-button" class="button">
+						<button>Begin Play</button>
+					</div>
+					<div id="reset-button" class="button">
+						<button>Reset Game</button>
+					</div>
 				</div>
 			</section>
 			<ul class="deck">

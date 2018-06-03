@@ -47,7 +47,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
  //grab the moves counter
  let moves = document.querySelector('.moves');
  let counter = 0;
@@ -58,6 +57,22 @@ function shuffle(array) {
  let hours = 0;
  let timer = document.querySelector('.timer');
 
+ //dynamically generate game board with randomized cards
+ function preGame() {
+ 	//grab deck and map cardIconClasses
+ 	let deck = document.querySelector('.deck');
+ 	let cardHTML = shuffle(cardIconClasses).map(function(card) {
+ 		return createCard(card);
+ 	});
+ 	//join mapped cardHTML to the game board
+ 	deck.innerHTML = cardHTML.join('');
+ 	counter = 0;
+ 	timer.innerHTML = '0 hrs 0 min 0 sec';
+ }
+
+ //call preGame
+ preGame();
+
 //function to increment moves
  function moveCounter() {
 	counter ++;
@@ -67,7 +82,7 @@ function shuffle(array) {
 //function to track time
 function beginTimer() {
 		let interval = setInterval(function() {
-		timer.innerHTML = minutes+"&nbsp;min "+seconds+"&nbsp;sec";
+		timer.innerHTML = hours + "&nbsp;hrs " + minutes + "&nbsp;min " + seconds + "&nbsp;sec";
 		if (seconds === 59) {
 			if (minutes === 59) {
 				hours++;
@@ -82,47 +97,18 @@ function beginTimer() {
 	},1000);
 }
 
-//dynamically generate game board with randomized cards
-function startGame() {
-	//grab deck and map cardIconClasses
-	let deck = document.querySelector('.deck');
-	let cardHTML = shuffle(cardIconClasses).map(function(card) {
-		return createCard(card);
-	});
-	//join mapped cardHTML to the game board
-	deck.innerHTML = cardHTML.join('');
-	counter = 0;
-	timer.innerHTML = '0 min 0 sec';
-}
-
-startGame();
-
-//function to temporarily disable card 'click' event
-function disable(){
-    Array.prototype.filter.call(cards, function(card){
-        card.classList.add('disabled');
-    });
-}
-
-//function to re-enable card 'click' event
-function enable(){
-    Array.prototype.filter.call(cards, function(card){
-        card.classList.remove('disabled');
-    });
-}
-
-//grab all <li> elements with class of '.card'
-let cards = document.querySelectorAll('.card');
-
 //create array to hold cards for comparison
 let tempOpenCard = [];
 
 //create array for cards that are matched
 let matchedCards = [];
 
+//grab all <li> elements with class of '.card'
+let cards = document.querySelectorAll('.card');
+
 //loop through nodeList and add event listener
 cards.forEach(function(card) {
-	card.addEventListener('click', function(evt){
+	card.addEventListener('click', function(evt) {
 		//show some cards and add them to the tempOpenCard array for comparison
 		if (!card.classList.contains('show', 'open') && !card.classList.contains('match')) {
 			tempOpenCard.push(card);
@@ -160,6 +146,30 @@ cards.forEach(function(card) {
 				}
 		}
 	});
+});
+
+//function to temporarily disable card 'click' event
+function disable() {
+    Array.prototype.filter.call(cards, function(card){
+        card.classList.add('disabled');
+    });
+}
+
+disable();
+
+//function to re-enable card 'click' event
+function enable() {
+    Array.prototype.filter.call(cards, function(card){
+        card.classList.remove('disabled');
+    });
+}
+
+//grab begin game button
+let beginButton = document.getElementById('begin-button');
+
+beginButton.addEventListener('click', function(evt) {
+	enable();
+	beginTimer();
 });
 
 // //winning the game!
