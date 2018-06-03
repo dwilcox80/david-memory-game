@@ -22,6 +22,11 @@ body {
 	font-family: 'Coda', cursive;
 }
 
+.heading-title {
+	display: flex;
+	width: 100%;
+}
+
 .container {
 	display: flex;
 	justify-content: center;
@@ -32,6 +37,7 @@ body {
 h1 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
+	font-size: 35px;
 }
 
 
@@ -40,7 +46,7 @@ h1 {
  */
 
 .deck {
-	width: 660px;
+	width: 50%;
 	min-height: 680px;
 	background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
 	padding: 32px;
@@ -143,9 +149,10 @@ h1 {
  */
 
 .score-panel {
-	text-align: left;
-	width: 345px;
+	display: flex;
+	width: 50%;
 	margin-bottom: 10px;
+	font-size: 20px;
 }
 
 .score-panel .stars {
@@ -160,7 +167,17 @@ h1 {
 	display: inline-block;
 }
 
-.score-panel .restart {
-	float: right;
+.score-panel .star-container ,
+.score-panel .move-container,
+.score-panel .time-container {
+	display: flex;
+	width: 25%;
+	justify-content: center;
+}
+
+ .score-panel .restart {
+	display: flex;
+	width: 25%;
+	justify-content: center;
 	cursor: pointer;
 }

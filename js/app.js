@@ -52,10 +52,35 @@ function shuffle(array) {
  let moves = document.querySelector('.moves');
  let counter = 0;
 
+ //declare time variables
+ let seconds = 0;
+ let minutes = 0;
+ let hours = 0;
+ let timer = document.querySelector('.timer');
+
+//function to increment moves
  function moveCounter() {
 	counter ++;
-	moves.innerHTML = counter;
+	moves.innerHTML = counter + '&nbsp; ';
  }
+
+//function to track time
+function beginTimer() {
+		let interval = setInterval(function() {
+		timer.innerHTML = minutes+"&nbsp;min "+seconds+"&nbsp;sec";
+		if (seconds === 59) {
+			if (minutes === 59) {
+				hours++;
+				minutes = 0;
+			}	else {
+					minutes++;
+			   		seconds = 0;
+			}
+          }	else {
+				seconds++;
+		}
+	},1000);
+}
 
 //dynamically generate game board with randomized cards
 function startGame() {
@@ -66,7 +91,8 @@ function startGame() {
 	});
 	//join mapped cardHTML to the game board
 	deck.innerHTML = cardHTML.join('');
-	moves.innerHTML = 0;
+	counter = 0;
+	timer.innerHTML = '0 min 0 sec';
 }
 
 startGame();
@@ -136,15 +162,16 @@ cards.forEach(function(card) {
 	});
 });
 
-//winning the game!
-if (matchedCards.length === 16) {
-	//stop timer
-	//grab move count
-	//grab stars
-	//display modal
-	if (playAgain) {
-		startGame();
-	}
-}
+// //winning the game!
+// if (matchedCards.length === 16) {
+// 	//stop timer
+// 	//grab time
+// 	//grab move count
+// 	//grab stars
+// 	//display modal
+// 	if (playAgain) {
+// 		startGame();
+// 	}
+// }
 
 let stars = document.querySelector('.stars');
