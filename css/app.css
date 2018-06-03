@@ -166,12 +166,12 @@ h1 {
 	padding: 0;
 	display: inline-block;
 	margin: 0 5px 0 0;
-	color: #ecec40;
 }
 
 .score-panel .stars li {
 	list-style: none;
 	display: inline-block;
+	color: #ecec40;
 }
 
 .score-panel .stat-container  {

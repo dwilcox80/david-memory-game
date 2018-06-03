@@ -73,11 +73,28 @@ function shuffle(array) {
  //call preGame
  preGame();
 
+//grab stars in stat section
+const stars = document.querySelectorAll('.stars li');
+
 //function to increment moves
  function moveCounter() {
 	counter ++;
 	moves.innerHTML = counter + '&nbsp; ';
- }
+	if (counter > 10 && counter < 16) {
+    		for (let  i= 0; i < 3; i++) {
+	   		if (i > 1) {
+		 	stars[i].style.color = "black";
+	   		}
+		}
+	}
+		else if (counter > 16) {
+			for (let i= 0; i < 3; i++) {
+	   			if (i > 0) {
+		  			stars[i].style.color = "black";
+	   			}
+			}
+		}
+}
 
 //function to track time
 function beginTimer() {
@@ -132,7 +149,7 @@ cards.forEach(function(card) {
 					enable();
 					tempOpenCard = [];
 				}, 1200);
-				moveCounter();
+				moveCounter(stars);
 			}
 				else {
 					tempOpenCard.forEach(function(card) {
@@ -141,7 +158,7 @@ cards.forEach(function(card) {
 						matchedCards.push(card);
 					});
 					enable();
-					moveCounter();
+					moveCounter(stars);
 					tempOpenCard = [];
 				}
 		}
@@ -183,5 +200,3 @@ beginButton.addEventListener('click', function(evt) {
 // 		startGame();
 // 	}
 // }
-
-let stars = document.querySelector('.stars');
