@@ -10,9 +10,37 @@ let cardClasses = ['fa-diamond','fa-diamond',
 						'fa-anchor','fa-anchor'
 						];
 
-function createCard(card) {
-	return `<li class="card" data-card=${card}><i class="fa ${card}"></i></li>`;
-}
+//grab the moves counter
+let moves = document.querySelector('.moves');
+let counter = 0;
+
+//time variables
+let myTimer;
+let timer = document.querySelector('.timer');
+let seconds = 0;
+let minutes = 0;
+
+//grab stars in stat section
+let stars = document.querySelectorAll('.stars .fa-star');
+
+//grab the deck
+let deck = document.querySelector('.deck');
+
+//create array to hold cards for comparison
+let openCards = [];
+
+//create array for cards that are matched
+let matchCards = [];
+
+//grab all <li> elements with class of '.card'
+let cards = document.querySelectorAll('.card');
+
+// modal variables
+let modal = document.getElementById('myModal');
+let finalTime = document.getElementById('finalTime');
+let finalMoves = document.getElementById('finalMoves');
+let finalStars = document.getElementById('finalStars');
+let span = document.getElementsByClassName("close")[0];
 
 /*
  * Display the cards on the page
@@ -20,6 +48,11 @@ function createCard(card) {
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+//create card HTML
+ function createCard(card) {
+ 	return `<li class="card" data-card=${card}><i class="fa ${card}"></i></li>`;
+ }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -44,31 +77,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
- //grab the moves counter
- let moves = document.querySelector('.moves');
- let counter = 0;
-
- //declare time variables
-let timer = document.querySelector('.timer');
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
-let myTimer;
-
- //grab stars in stat section
- const stars = document.querySelectorAll('.stars li');
-
-//grab the deck
-let deck = document.querySelector('.deck');
-
-//create array to hold cards for comparison
-let openCards = [];
-
-//create array for cards that are matched
-let matchCards = [];
-
-//grab all <li> elements with class of '.card'
-let cards = document.querySelectorAll('.card');
 
  //dynamically generate game board with randomized cards
  function preGame() {
@@ -78,13 +86,9 @@ let cards = document.querySelectorAll('.card');
  	});
  	//join mapped cardHTML to the game board
  	deck.innerHTML = cardHTML.join('');
- 	counter = 0;
 	moves.innerHTML = `${counter} Moves`;
-	timer.innerHTML = `${hours} hrs ${minutes} mins ${seconds} sec`;
+	timer.innerHTML = `${minutes} mins ${seconds} sec`;
  }
-
- //call preGame
- document.onload = preGame();
 
 //function to increment moves
  function moveCounter() {
@@ -94,94 +98,71 @@ let cards = document.querySelectorAll('.card');
 	}	else {
 			moves.innerHTML = `${counter} Moves`;
 	}
-	if (counter > 10 && counter < 16) {
+	if (counter > 12 && counter < 18) {
     		for (let  i= 0; i < 3; i++) {
 	   		if (i > 1) {
-		 	stars[i].style.color = "#000";
+			stars[i].style.visibility = "collapse";
 	   		}
 		}
 	}
-		else if (counter > 16) {
+		else if (counter > 18) {
 			for (let i= 0; i < 3; i++) {
 	   			if (i > 0) {
-		  			stars[i].style.color = "#000";
+					stars[i].style.visibility = "collapse";
 	   			}
 			}
 		}
 }
 
-//function to track time
-// let beginTimer = setInterval(function(){
-// 	timer.innerHTML = `${hours} hrs ${minutes} mins ${seconds} sec`;
-// 	if (seconds === 59) {
-// 		if (minutes === 59) {
-// 			hours++;
-// 			minutes = 0;
-// 			seconds = 0;
-// 		}	else {
-// 				minutes++;
-// 				seconds = 0;
-// 		}
-// 	}	else {
-// 			seconds++;
-// 		}
-// }, 1000);
-
+// timer functions
 function beginTimer () {
-	console.log('inside begin');
-	let myTimer = setInterval(resetTimer, 1000);
+	myTimer = setInterval(resetTimer, 1000);
 	function resetTimer () {
-		console.log('inside reset');
-		if (matchCards.length !== 16) {
-			console.log('inside counter');
-			if (seconds === 59) {
-				if (minutes === 59) {
-					hours++;
-					minutes = 0;
+		if (matchCards.length <= 15) {
+			if (seconds  < 59) {
+				seconds++;
+				if (seconds === 59) {
+					minutes++;
 					seconds = 0;
-				}	else {
-						minutes++;
-						seconds = 0;
 				}
-			}	else {
-					seconds++;
-				}
-		timer.innerHTML = `${hours} hrs ${minutes} mins ${seconds} sec`;
-		} else {
-			console.log('inside clear');
-			clearInterval(myTimer);
+			}
 		}
+			else {
+				clearInterval(myTimer);
+			}
+		timer.innerHTML = `${minutes} mins ${seconds} sec`;
 	}
 }
 
 //add event listener to deck and rely on event delegation
 deck.addEventListener('click', showCard);
 
-//function to show a card and prevent double clicking
 function showCard(evt) {
 	if (evt.target.nodeName === 'LI') {
 		if (!evt.target.classList.contains('show', 'open') && !evt.target.classList.contains('match')) {
 			openCards.push(evt.target);
 			evt.target.classList.add('show','open');
-			if (openCards.length === 1 && (hours === 0 && minutes === 0 && seconds === 0)) {
-				console.log('timer start');
+			if (openCards.length === 1 && (minutes === 0, seconds === 0)){
 				beginTimer();
 			}
-			if (openCards.length === 2) {
-				if (openCards[0].dataset.card === openCards[1].dataset.card)  {
-					match();
+				else if (openCards.length === 2) {
+				runMatch();
 				}
-					else {
-						noMatch();
-					}
-				openCards = []; // empty openCards array for next pair to be compared
-				moveCounter();
-			}
-			if (matchCards.length === 16) {
-				endGame();
-				// clearInterval(beginTimer);
-			}
 		}
+	}
+}
+
+function runMatch() {
+	if (openCards[0].dataset.card === openCards[1].dataset.card)  {
+		match();
+	}
+		else {
+			noMatch();
+		}
+	openCards = []; // empty openCards array for next pair to be compared
+	moveCounter();
+	if (matchCards.length === 16) {
+		endGame();
 	}
 }
 
@@ -206,26 +187,16 @@ function match() {
 	}
 }
 
-// add option to reset Game
-let reset = document.getElementById('reset-button');
-reset.addEventListener('click', resetGame);
-function resetGame (cards, stars) {
-	for (let card of cards) {
-		card.classList.remove('show','open','match');
+function endGame() {
+	modal.style.display = 'block';
+	finalTime.innerHTML = timer.innerHTML;
+	finalMoves.innerHTML = moves.innerHTML;
+	finalStars.innerHTML = "";
+	for (let star of stars) {
+		console.log(star.innerHTML);
+		finalStars.appendChild(star);
 	}
-	counter = 0;
-	moves.innerHTML = `${counter} Moves`;
-	// resetTimer();
 }
-
-function endGame () {
-	modal.style.display = "block";
-
-}
-
-// modal variables
-let modal = document.getElementById('myModal');
-let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -236,5 +207,9 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+	   resetGame();
     }
 }
+
+//call preGame
+ document.onload = preGame();
