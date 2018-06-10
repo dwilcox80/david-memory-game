@@ -36,32 +36,31 @@ body {
 
 h1 {
 	font-weight: 300;
-	font-size: 45px;
+	font-size: 1.5em;
 	margin: 0;
 }
-
 
 /*
  * Styles for the deck of cards
  */
 
 .deck {
-	width: 50%;
-	min-height: 680px;
+	width: 95%;
+	min-height: 400px;
 	background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-	padding: 32px;
+	padding:  0 5px;
 	border-radius: 10px;
 	box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
-	margin: 0 0 3em;
+	/* margin: 0 0 3em; */
 }
 
 .deck .card {
-	height: 125px;
-	width: 125px;
+	height: 70px;
+	width: 70px;
 	background: #2e3d49;
 	font-size: 0;
 	color: #ffffff;
@@ -82,14 +81,13 @@ h1 {
 }
 
 .deck .card.show {
-	font-size: 33px;
+	font-size: 24px;
 }
 
 .deck .card.match.pulse {
 	cursor: default;
 	background: #07ba4f;
-	font-size: 33px;
-	transform:
+	font-size: 24px;
 }
 
 .pulse {
@@ -146,8 +144,10 @@ h1 {
  */
 
 .score-panel {
-	width: 50%;
-	font-size: 20px;
+	display: flex;
+	width: 100%;
+	font-size: 0.9em;
+	flex-direction: column;
 }
 
 .game-stats {
@@ -155,24 +155,24 @@ h1 {
 	width: 100%;
 	flex-wrap: wrap;
 	margin-bottom: 10px;
+	justify-content: center;
 }
 
 .score-panel .stars {
 	margin: 0;
 	padding: 0;
-	display: inline-block;
-	margin: 0 5px 0 0;
+	display: flex;
 }
 
 .score-panel .stars li {
 	list-style: none;
-	display: inline-block;
+	display: inline-flex;
 	color: #ecec40;
 }
 
 .score-panel .stat-container  {
 	display: flex;
-	width: 33.3333334%;
+	width: 100%;
 	justify-content: center;
 }
 
@@ -184,11 +184,11 @@ h1 {
 
 .reset-button {
 	background-color: #02ccba;
-	width: 40%;
+	max-width: 40%;
 	cursor: pointer;
 	border-radius: 5px;
-	padding: 10px;
-	font-size: 15px;
+	padding: 5px;
+	font-size: 0.9em;
 	font-family: 'Righteous';
 }
 
@@ -210,17 +210,17 @@ h1 {
 	flex-wrap: wrap;
 	background-color: #feefee;
 	margin: 5% auto; /* 15% from the top and centered */
-	padding: 20px;
+	padding: 10px;
 	border: 1px solid #888;
 	border-radius: 10px;
-	width: 50%;
+	width: 80%;
 }
 
 .modal-container {
 	display: flex;
-	width:98%;
+	width: 98%;
 	justify-content: center;
-	font-size: 24px;
+	font-size: 1em;
 }
 
 .modal-stats {
@@ -229,22 +229,28 @@ h1 {
 	flex-direction: column;
 	align-items: center;
 }
+
 .close {
 	color: #000;
 	display: flex;
 	width: 2%;
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .modal-content .reset-button {
-	width: 25%;
-	margin-left: auto;
-	margin-right: auto;
+	width: 40%;
 	background-color: #02ccba;
 	cursor: pointer;
 	border-radius: 5px;
 	padding: 10px;
-	font-size: 15px;
+	font-size: 0.8em;
 	font-family: 'Righteous';
+}
+
+#finalStars li {
+	list-style-type: none;
+	display: inline-block;
+	color: #ecec40;
 }

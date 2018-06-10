@@ -1,14 +1,15 @@
 //Create a list that holds all of your cards
 
-let cardClasses = ['fa-diamond','fa-diamond',
-						'fa-bolt', 'fa-bolt',
-						'fa-cube', 'fa-cube',
-						'fa-bomb','fa-bomb',
-						'fa-bicycle','fa-bicycle',
-						'fa-leaf','fa-leaf',
-						'fa-paper-plane-o','fa-paper-plane-o',
-						'fa-anchor','fa-anchor'
-						];
+let cardClasses = [
+	'fa-diamond','fa-diamond',
+	'fa-bolt', 'fa-bolt',
+	'fa-cube', 'fa-cube',
+	'fa-bomb','fa-bomb',
+	'fa-bicycle','fa-bicycle',
+	'fa-leaf','fa-leaf',
+	'fa-paper-plane-o','fa-paper-plane-o',
+	'fa-anchor','fa-anchor'
+];
 
 //grab the moves counter
 let moves = document.querySelector('.moves');
@@ -21,7 +22,7 @@ let seconds = 0;
 let minutes = 0;
 
 //grab stars in stat section
-let stars = document.querySelectorAll('.stars .fa-star');
+let stars = document.querySelectorAll('.fa-star');
 
 //grab the deck
 let deck = document.querySelector('.deck');
@@ -79,14 +80,15 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- //dynamically generate game board with randomized cards
- function preGame() {
- 	// map cardClasses
- 	let cardHTML = shuffle(cardClasses).map(function(card) {
- 		return createCard(card);
- 	});
- 	//join mapped cardHTML to the game board
- 	deck.innerHTML = cardHTML.join('');
+//dynamically generate game board with randomized cards
+function preGame() {
+	// map cardClasses
+	let cardHTML = shuffle(cardClasses).map(function(card) {
+		return createCard(card);
+	});
+	//join mapped cardHTML to the game board
+	deck.innerHTML = cardHTML.join('');
+
 	counter = 0;
 	minutes = 0;
 	seconds = 0;
@@ -96,7 +98,8 @@ function shuffle(array) {
 	moves.innerHTML = `${counter} Moves`;
 	timer.innerHTML = `${minutes} mins ${seconds} sec`;
 	modal.style.display = 'none';
- }
+	matchCards = [];
+}
 
 //create button variables and add eventListener
 let reset = document.getElementById('reset');
@@ -105,18 +108,18 @@ reset.addEventListener('click', preGame);
 playAgain.addEventListener('click', preGame);
 
 //function to increment moves
- function moveCounter() {
+function moveCounter() {
 	counter ++;
 	if (counter === 1) {
 		moves.innerHTML = `${counter} Move`;
 	}	else {
 			moves.innerHTML = `${counter} Moves`;
-	}
+		}
 	if (counter > 12 && counter < 18) {
-    		for (let  i= 0; i < 3; i++) {
-	   		if (i > 1) {
-			stars[i].style.visibility = "collapse";
-	   		}
+		for (let  i= 0; i < 3; i++) {
+   			if (i > 1) {
+				stars[i].style.visibility = "collapse";
+   			}
 		}
 	}
 		else if (counter > 18) {
@@ -160,13 +163,13 @@ function showCard(evt) {
 				beginTimer();
 			}
 				else if (openCards.length === 2) {
-				deck.removeEventListener('click', showCard);
 				runMatch();
 				}
 		}
 	}
 }
 
+// function to compare cards in openCards array
 function runMatch() {
 	if (openCards[0].dataset.card === openCards[1].dataset.card)  {
 		match();
@@ -202,19 +205,19 @@ function match() {
 	}
 }
 
+// function for when all cards are matched succesfully
 function endGame() {
 	modal.style.display = 'block';
 	finalTime.innerHTML = timer.innerHTML;
 	finalMoves.innerHTML = moves.innerHTML;
-	finalStars.innerHTML = "";
-	for (let star of stars) {
-		finalStars.appendChild(star);
-	}
+	let starScore = document.querySelector('.stars').innerHTML;
+	finalStars.innerHTML = starScore;
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
+    preGame();
 }
 
 // When the user clicks anywhere outside of the modal, close it
