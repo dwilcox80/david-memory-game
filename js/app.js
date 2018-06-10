@@ -34,6 +34,7 @@ let matchCards = [];
 
 //grab all <li> elements with class of '.card'
 let cards = document.querySelectorAll('.card');
+let card = [...cards];
 
 // modal variables
 let modal = document.getElementById('myModal');
@@ -86,9 +87,22 @@ function shuffle(array) {
  	});
  	//join mapped cardHTML to the game board
  	deck.innerHTML = cardHTML.join('');
+	counter = 0;
+	minutes = 0;
+	seconds = 0;
+	for (let star of stars) {
+		star.style.visibility = 'visible';
+	}
 	moves.innerHTML = `${counter} Moves`;
 	timer.innerHTML = `${minutes} mins ${seconds} sec`;
+	modal.style.display = 'none';
  }
+
+//create button variables and add eventListener
+let reset = document.getElementById('reset');
+let playAgain = document.getElementById('play')
+reset.addEventListener('click', preGame);
+playAgain.addEventListener('click', preGame);
 
 //function to increment moves
  function moveCounter() {
@@ -116,7 +130,7 @@ function shuffle(array) {
 
 // timer functions
 function beginTimer () {
-	myTimer = setInterval(resetTimer, 1000);
+	myTimer = setInterval(resetTimer, 1000); //create ID for clearInterval
 	function resetTimer () {
 		if (matchCards.length <= 15) {
 			if (seconds  < 59) {
@@ -146,6 +160,7 @@ function showCard(evt) {
 				beginTimer();
 			}
 				else if (openCards.length === 2) {
+				deck.removeEventListener('click', showCard);
 				runMatch();
 				}
 		}
@@ -193,7 +208,6 @@ function endGame() {
 	finalMoves.innerHTML = moves.innerHTML;
 	finalStars.innerHTML = "";
 	for (let star of stars) {
-		console.log(star.innerHTML);
 		finalStars.appendChild(star);
 	}
 }
@@ -207,7 +221,7 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
-	   resetGame();
+	   preGame();
     }
 }
 

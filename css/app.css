@@ -100,10 +100,6 @@ h1 {
     animation-timing-function: linear;
 }
 
-.deck .card.disabled {
-	pointer-events: none;
-}
-
 /*
 * no-match animation adapted from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/
 *article posted by Sarah Drasner on 8-24-15
@@ -211,17 +207,32 @@ h1 {
 /* Modal Content/Box */
 .modal-content {
 	display: flex;
+	flex-wrap: wrap;
 	background-color: #feefee;
-	margin: 15% auto; /* 15% from the top and centered */
+	margin: 5% auto; /* 15% from the top and centered */
 	padding: 20px;
 	border: 1px solid #888;
 	border-radius: 10px;
 	width: 50%;
 }
 
+.modal-container {
+	display: flex;
+	width:98%;
+	justify-content: center;
+	font-size: 24px;
+}
+
+.modal-stats {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: center;
+}
 .close {
 	color: #000;
-	float: right;
+	display: flex;
+	width: 2%;
 	font-size: 28px;
 	font-weight: bold;
 }
