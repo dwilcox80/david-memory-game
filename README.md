@@ -5,6 +5,8 @@ This is a Udacity Grow with Google challenge Project.  The purpose
 is to mimic a classic memory game of matching a paired deck of
 16 cards.
 
+A live version of this game can be played here https://dwilcox80.github.io/david-memory-game/
+
 # Requirements
 - Game must randomly shuffle deck on each game start
 - Game must have logic tracking matched cards
